@@ -77,6 +77,8 @@ export default {
         this.quantidadeNumeros = 5;
         return this.limpar();
       }
+      // Finalização
+      this.tela = 'fim';
     },
   },
   data() {

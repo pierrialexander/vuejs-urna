@@ -7,3 +7,20 @@
 </div>
 
 
+## VOTOS PARA TESTAR:
+
+Prefeitos: 
+
+01 - Ash
+Partido: Pokemon
+
+08 = Vegeta
+Partido: Dragon Ball
+
+Vereadores:
+
+01234 - Pikachu
+Partido: Pokemon
+
+08001 - Goku
+Partido: Dragon Ball

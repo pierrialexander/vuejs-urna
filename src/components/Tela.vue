@@ -34,7 +34,7 @@
         
         </div>
         <div v-if="tela == 'fim'" class="urna-tela-fim">
-            finalizacao
+            FIM
         </div>
     </div>
 </template>
@@ -121,5 +121,14 @@ export default {
     font-size: 13px;
     margin-top: 20px;
     padding-top: 10px;
+}
+
+.urna-tela-fim {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 120px;
+    width: 100%;
+    height: 100%;
 }
 </style>
