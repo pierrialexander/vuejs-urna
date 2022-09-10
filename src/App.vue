@@ -1,107 +1,123 @@
 <template>
   <div id="app">
     <div class="urna">
-
-      <TelaUrna 
+      <TelaUrna
         :tela="tela"
         :numeroVoto="numeroVoto"
         :quantidadeNumeros="quantidadeNumeros"
         :candidato="candidato"
       />
 
-      <TecladoUrna 
-        :adicionarNumero = 'adicionarNumero'
-        :corrigir = 'corrigir'
+      <TecladoUrna
+        :adicionarNumero="adicionarNumero"
+        :corrigir="corrigir"
+        :confirmar="confirmar"
       />
-
     </div>
   </div>
 </template>
 
 <script>
-import '@/assets/css/global.css'
-import TecladoUrna from '@/components/Teclado.vue';
-import TelaUrna from '@/components/Tela.vue';
+import "@/assets/css/global.css";
+import TecladoUrna from "@/components/Teclado.vue";
+import TelaUrna from "@/components/Tela.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
     TecladoUrna,
-    TelaUrna
+    TelaUrna,
   },
   methods: {
-    adicionarNumero(numero){
+    adicionarNumero(numero) {
       //Verifica limite de numeros votados
-      if(this.numeroVoto.length == this.quantidadeNumeros){
+      if (this.numeroVoto.length == this.quantidadeNumeros) {
         return false;
       }
       //Adiciona o numero selecionado
-      this.numeroVoto += ''+numero;
+      this.numeroVoto += "" + numero;
 
       //Verifica o candidato votado
       this.verificarCandidato();
     },
-    verificarCandidato(){
+    verificarCandidato() {
       //Voto Incompleto
-      if(this.numeroVoto.length < this.quantidadeNumeros){
+      if (this.numeroVoto.length < this.quantidadeNumeros) {
         return false;
       }
       //Verifica Candidato existente
-      if(this.candidatos[this.tela][this.numeroVoto]){
+      if (this.candidatos[this.tela][this.numeroVoto]) {
         this.candidato = this.candidatos[this.tela][this.numeroVoto];
         return true;
       }
 
       //Voto nulo
       this.candidato = {
-        nome: 'Voto nulo',
-        partido: 'Voto nulo',
-        imagem: ''
-      }
+        nome: "Voto nulo",
+        partido: "Voto nulo",
+        imagem: "",
+      };
     },
     corrigir() {
-      this.limpar()
+      this.limpar();
     },
     limpar() {
-      this.candidato = {},
-      this.numeroVoto = ''
-    }
+      (this.candidato = {}), (this.numeroVoto = "");
+    },
+    confirmar() {
+      if (this.numeroVoto.length < this.quantidadeNumeros) {
+        return false;
+      }
+      return this.avancarTela();
+    },
+    avancarTela() {
+      //Vereador
+      if (this.tela == "prefeito") {
+        this.tela = "vereador";
+        this.quantidadeNumeros = 5;
+        return this.limpar();
+      }
+    },
   },
   data() {
     return {
-      tela: 'prefeito',
-      numeroVoto: '',
+      tela: "prefeito",
+      numeroVoto: "",
       quantidadeNumeros: 2,
-      candidato:{},
+      candidato: {},
       candidatos: {
-                    "prefeito":{
-                      "01":{
-                        "nome": "Ash",
-                        "partido": "Pokemon",
-                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/ash.png"
-                      },
-                      "08":{
-                        "nome": "Vegeta",
-                        "partido": "Dragon Ball",
-                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/vegeta.png"
-                      }
-                    },
-                    "vereador":{
-                      "01234":{
-                        "nome": "Pikachu",
-                        "partido": "Pokemon",
-                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/pikachu.png"
-                      },
-                      "08001":{
-                        "nome": "Goku",
-                        "partido": "Dragon Ball",
-                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/goku.png"
-                      }
-                    }
-                  }
-    }
-  }
-}
+        prefeito: {
+          "01": {
+            nome: "Ash",
+            partido: "Pokemon",
+            imagem:
+              "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/ash.png",
+          },
+          "08": {
+            nome: "Vegeta",
+            partido: "Dragon Ball",
+            imagem:
+              "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/vegeta.png",
+          },
+        },
+        vereador: {
+          "01234": {
+            nome: "Pikachu",
+            partido: "Pokemon",
+            imagem:
+              "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/pikachu.png",
+          },
+          "08001": {
+            nome: "Goku",
+            partido: "Dragon Ball",
+            imagem:
+              "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/goku.png",
+          },
+        },
+      },
+    };
+  },
+};
 </script>
 
 <style>
@@ -123,5 +139,4 @@ export default {
   display: flex;
   justify-content: space-between;
 }
-
 </style>

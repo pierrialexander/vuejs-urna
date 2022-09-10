@@ -26,7 +26,10 @@
             </div>
             
             <div class="urna-tela-voto-instrucoes">
-
+                <p>Aperte a tecla:</p>
+                <p>BRANCO para VOTAR EM BRANCO</p>
+                <p>LARANJA para CORRIGIR</p>
+                <p>VERDE para CONFIRMAR</p>
             </div>
         
         </div>
@@ -66,6 +69,9 @@ export default {
 
 .urna-tela-voto {
     display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
 }
 
 .urna-tela-voto-textos{
@@ -107,5 +113,13 @@ export default {
     width: 110px;
     height: 150px;
     border: 1px solid var(--dark-border-color);
+}
+
+.urna-tela-voto-instrucoes {
+    width: 100%;
+    border-top: 1px solid var(--dark-border-color);
+    font-size: 13px;
+    margin-top: 20px;
+    padding-top: 10px;
 }
 </style>
