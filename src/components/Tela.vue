@@ -11,10 +11,18 @@
                         {{ value }}
                     </div>
                 </div>
+                <div class="urna-tela-voto-descricao">
+                    Nome: 
+                    <strong>{{ candidato.nome ? candidato.nome : '__________' }}</strong>
+                </div>
+                <div class="urna-tela-voto-descricao">
+                    Partido: 
+                    <strong>{{ candidato.partido ? candidato.partido : '__________' }}</strong>
+                </div>
             </div>
             
-            <div class="urna-tela-voto-imagem">
-
+            <div v-if="candidato.imagem" class="urna-tela-voto-imagem">
+                <img :src="candidato.imagem">
             </div>
             
             <div class="urna-tela-voto-instrucoes">
@@ -36,7 +44,8 @@ export default {
     props: {
         tela: String, 
         numeroVoto: String,
-        quantidadeNumeros: Number
+        quantidadeNumeros: Number,
+        candidato: Object
     }
 }
 </script>
@@ -53,6 +62,14 @@ export default {
     border: 2px solid var(--light-border-color);
     padding: 20px;
     color: var(--dark-text-color);
+}
+
+.urna-tela-voto {
+    display: flex;
+}
+
+.urna-tela-voto-textos{
+    flex:1;
 }
 
 .urna-tela-voto-titulo {
@@ -80,5 +97,15 @@ export default {
    justify-content: center;
    align-items: center;
    font-size: 30px;
+}
+
+.urna-tela-voto-descricao {
+    margin-top: 20px;
+}
+
+.urna-tela-voto-imagem img {
+    width: 110px;
+    height: 150px;
+    border: 1px solid var(--dark-border-color);
 }
 </style>

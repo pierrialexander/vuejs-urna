@@ -6,9 +6,13 @@
         :tela="tela"
         :numeroVoto="numeroVoto"
         :quantidadeNumeros="quantidadeNumeros"
+        :candidato="candidato"
       />
 
-      <TecladoUrna />
+      <TecladoUrna 
+        :adicionarNumero = 'adicionarNumero'
+        :corrigir = 'corrigir'
+      />
 
     </div>
   </div>
@@ -25,11 +29,76 @@ export default {
     TecladoUrna,
     TelaUrna
   },
+  methods: {
+    adicionarNumero(numero){
+      //Verifica limite de numeros votados
+      if(this.numeroVoto.length == this.quantidadeNumeros){
+        return false;
+      }
+      //Adiciona o numero selecionado
+      this.numeroVoto += ''+numero;
+
+      //Verifica o candidato votado
+      this.verificarCandidato();
+    },
+    verificarCandidato(){
+      //Voto Incompleto
+      if(this.numeroVoto.length < this.quantidadeNumeros){
+        return false;
+      }
+      //Verifica Candidato existente
+      if(this.candidatos[this.tela][this.numeroVoto]){
+        this.candidato = this.candidatos[this.tela][this.numeroVoto];
+        return true;
+      }
+
+      //Voto nulo
+      this.candidato = {
+        nome: 'Voto nulo',
+        partido: 'Voto nulo',
+        imagem: ''
+      }
+    },
+    corrigir() {
+      this.limpar()
+    },
+    limpar() {
+      this.candidato = {},
+      this.numeroVoto = ''
+    }
+  },
   data() {
     return {
-      tela: 'vereador',
-      numeroVoto: '2',
-      quantidadeNumeros: 2
+      tela: 'prefeito',
+      numeroVoto: '',
+      quantidadeNumeros: 2,
+      candidato:{},
+      candidatos: {
+                    "prefeito":{
+                      "01":{
+                        "nome": "Ash",
+                        "partido": "Pokemon",
+                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/ash.png"
+                      },
+                      "08":{
+                        "nome": "Vegeta",
+                        "partido": "Dragon Ball",
+                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/vegeta.png"
+                      }
+                    },
+                    "vereador":{
+                      "01234":{
+                        "nome": "Pikachu",
+                        "partido": "Pokemon",
+                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/pikachu.png"
+                      },
+                      "08001":{
+                        "nome": "Goku",
+                        "partido": "Dragon Ball",
+                        "imagem": "https://raw.githubusercontent.com/william-costa/wdev-urna-eletronica-resources/master/images/goku.png"
+                      }
+                    }
+                  }
     }
   }
 }
