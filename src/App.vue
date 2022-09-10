@@ -12,6 +12,7 @@
         :adicionarNumero="adicionarNumero"
         :corrigir="corrigir"
         :confirmar="confirmar"
+        :votarBranco="votarBranco"
       />
     </div>
   </div>
@@ -21,6 +22,8 @@
 import "@/assets/css/global.css";
 import TecladoUrna from "@/components/Teclado.vue";
 import TelaUrna from "@/components/Tela.vue";
+import confirmAudio from '@/assets/audios/confirm.wav';
+import keyAudio from '@/assets/audios/key.wav';
 
 export default {
   name: "App",
@@ -30,6 +33,8 @@ export default {
   },
   methods: {
     adicionarNumero(numero) {
+      //Executa som da tecla
+      this.executarSom(keyAudio);
       //Verifica limite de numeros votados
       if (this.numeroVoto.length == this.quantidadeNumeros) {
         return false;
@@ -59,6 +64,8 @@ export default {
       };
     },
     corrigir() {
+      //Executa som da tecla
+      this.executarSom(keyAudio);
       this.limpar();
     },
     limpar() {
@@ -71,6 +78,8 @@ export default {
       return this.avancarTela();
     },
     avancarTela() {
+      //Executa som de confirmação
+      this.executarSom(confirmAudio);
       //Vereador
       if (this.tela == "prefeito") {
         this.tela = "vereador";
@@ -79,7 +88,28 @@ export default {
       }
       // Finalização
       this.tela = 'fim';
+
+      // instancia atual
+      var me = this;
+      // Voltar ao início
+      setTimeout(function() {
+        me.tela = 'prefeito';
+        me.quantidadeNumeros = 2;
+        return me.limpar();
+      }, 3000);
     },
+    votarBranco(){
+      // Tela de Finalização não permite mais nada
+      if(this.tela == 'fim') return false;
+      this.limpar();
+      this.avancarTela();
+    },
+    executarSom(arquivoSom){
+      if(arquivoSom){
+        let audio = new Audio(arquivoSom);
+        audio.play();
+      }
+    }
   },
   data() {
     return {

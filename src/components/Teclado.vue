@@ -23,7 +23,7 @@
         </div>
 
         <div class="urna-teclado-acoes">
-            <button class="btn-branco">BRANCO</button>
+            <button @click="votarBranco()" class="btn-branco">BRANCO</button>
             <button @click="corrigir()" class="btn-corrige">CORRIGE</button>
             <button @click="confirmar()" class="btn-confirma">CONFIRMA</button>
         </div>
@@ -40,6 +40,7 @@ export default {
         adicionarNumero: Function,
         corrigir: Function,
         confirmar: Function,
+        votarBranco: Function,
     }    
 }
 </script>
